@@ -33,16 +33,14 @@ class LogIn extends Component {
     event.preventDefault()
     const {userId, pin} = this.state
     const userDetails = {user_id: parseInt(userId), pin: parseInt(pin)}
-    console.log(JSON.stringify(userDetails))
 
     const url = 'https://apis.ccbp.in/ebank/login'
 
-    const option = {
+    const options = {
       method: 'POST',
-      mode: 'no-cors',
       body: JSON.stringify(userDetails),
     }
-    const response = await fetch(url, option)
+    const response = await fetch(url, options)
     console.log(response)
     const data = response.json()
     if (response.ok === true) {
@@ -54,7 +52,7 @@ class LogIn extends Component {
   }
 
   render() {
-    const {showSubmitError, error} = this.state
+    const {showSubmitError, error, userId, pin} = this.state
     const jwtToken = Cookies.get('jwt_token')
 
     if (jwtToken !== undefined) {
@@ -79,6 +77,7 @@ class LogIn extends Component {
               className="user-input"
               placeholder="Enter User Id"
               onChange={this.onChangeUserId}
+              value={userId}
             />
             <label htmlFor="pin" className="form-label">
               PIN
@@ -88,6 +87,7 @@ class LogIn extends Component {
               id="pin"
               className="user-input"
               placeholder="Enter PIN"
+              value={pin}
               onChange={this.onChangePin}
             />
             <button type="submit" className="login-button">
