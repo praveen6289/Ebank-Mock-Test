@@ -32,7 +32,7 @@ class LogIn extends Component {
   onSubmitForm = async event => {
     event.preventDefault()
     const {userId, pin} = this.state
-    const userDetails = {user_id: parseInt(userId), pin: parseInt(pin)}
+    const userDetails = {userId, pin}
 
     const url = 'https://apis.ccbp.in/ebank/login'
 
@@ -41,8 +41,7 @@ class LogIn extends Component {
       body: JSON.stringify(userDetails),
     }
     const response = await fetch(url, options)
-    console.log(response)
-    const data = response.json()
+    const data = await response.json()
     if (response.ok === true) {
       this.submitSuccess(data.jwt_token)
     } else {
